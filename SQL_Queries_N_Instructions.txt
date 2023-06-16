@@ -1,0 +1,37 @@
+install SQL and Express in the file
+""
+npm install express
+npm install mysql
+npm install path
+""
+
+Insert SQL credentials in the respective server code
+
+Execute SQL query
+""
+Create database `Hermes_DB`;
+
+Use database `Hermes_DB`;
+
+Create table `Hermes_DB`.`Accounts`(
+    `ID` int not null PRIMARY KEY,
+    `Auth` int not null,
+    `Name` varchar(255),
+    `Email` varchar(255),
+    `Password` varchar(7),
+    `Creation date` timestamp not null CURRENT_TIMESTAMP
+);
+""
+
+Although something that should not be featured, a limited amount of digits for the password can stimulate creativity.
+Unfortunately, the idea diverges from something of comfort and passwords are made to keep secrecy without sacrificing practicality.
+It becomes a misplaced challenge.
+
+* How to make viable to make large texts being accessible in the database? Do I need Python?
+
+* We need to check the database too. Besides, the server.
+
+Create table `Hermes_DB`.`Posts`(
+    `Author` int not null,
+    `Text` varchar()
+)

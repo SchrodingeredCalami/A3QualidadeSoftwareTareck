@@ -8,6 +8,7 @@
     width: 100%;
     left: 0%;
     right: 0%;
+    
 }
 
 .tab_toggle button{
@@ -26,7 +27,7 @@
     .tab_toggle{
         border: 2px solid #747373bb;
         display: grid;
-        grid-template-columns: repeat(4,1fr);
+        grid-template-columns: repeat(1,1fr);
         gap: 0px;
         position: fixed;
         bottom: 0%;

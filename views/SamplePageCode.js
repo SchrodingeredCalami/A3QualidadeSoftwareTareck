@@ -14,3 +14,7 @@ function open_tab(evt, id){
     document.getElementById(id).style.display="block";
     evt.currentTarget.className += " active";
 }
+
+function postQuery(query){
+    
+}

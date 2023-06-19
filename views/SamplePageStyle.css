@@ -1,4 +1,4 @@
-.tab_toggle{
+.tab_buttons{
     border: 2px solid #747373bb;
     display: grid;
     grid-template-columns: repeat(4,1fr);
@@ -11,11 +11,11 @@
     
 }
 
-.tab_toggle button{
+.tab_buttons button{
     padding: 10px;
 }
 
-.tab_toggle button.active{
+.tab_buttons button.active{
     background-color: #4e4e4e75;
 }
 
@@ -23,8 +23,12 @@
     display: none;
 }
 
+.tab #Feed_tab{
+    display: block;
+}
+
 @media screen and (max-width: 425px) {
-    .tab_toggle{
+    .tab_buttons{
         border: 2px solid #747373bb;
         display: grid;
         grid-template-columns: repeat(1,1fr);
@@ -34,5 +38,9 @@
         width: 100%;
         left: 0%;
         right: 0%;
+    }
+
+    span{
+        display:none;
     }
 }

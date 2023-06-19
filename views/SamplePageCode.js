@@ -15,6 +15,25 @@ function open_tab(evt, id){
     evt.currentTarget.className += " active";
 }
 
-function postQuery(query){
-    
+function login(){
+    console.log("starting login");
+
+    var data = {
+        "name/email":"",
+        "password":""
+    }
+
+    data["name/email"] = document.getElementById('login-name/email').value;
+    data.password = document.getElementById('password').value;
+
+    let req = new XMLHttpRequest();
+    req.onload = function () {
+        var res = JSON.parse(this.response);
+        if(!res.value){
+            document.getElementById("user_not_found").style.property=block;
+        }
+    }
+    req.open('POST','/login');
+    req.setRequestHeader('Content-Type','application/json');
+    req.send(JSON.stringify(data));
 }

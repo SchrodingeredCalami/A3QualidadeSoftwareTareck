@@ -1,7 +1,7 @@
 install express, path and sql
 ""
 npm install express
-npm install sql
+npm install mysql
 npm install path
 npm install ejs
 ""
@@ -10,9 +10,9 @@ insert SQL credentials in server
 
 Create database
 ""
-create database `Hermes`
+create database `Hermes`;
 
-use database `Hermes`
+use `Hermes`;
 
 USE `Hermes`;
 CREATE TABLE `Hermes`.`users`(

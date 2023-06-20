@@ -8,10 +8,10 @@ var app = express();
 var socket = 3000;
 
 var con = mysql.createConnection({
-    host:"",
-    user:"",
-    password:"",
-    database:""
+    host:"localhost",
+    user:"root",
+    password:"doxlyn",
+    database:"Hermes"
 })
 
 app.use(express.static(path.join(__dirname+'/views')));
@@ -21,7 +21,13 @@ function sendQuery(query){
         if (error){
             console.log("error at sending query")
         }else{
-            console.log(query+'\n\n\n'+result);
+            console.log("result = \n");
+            result.forEach(element => {
+                console.log(element)
+            });
+            result = JSON.parse(result);
+
+            console.log("2:\n"+result)
             return result;
         } throw error;
     });
@@ -43,9 +49,13 @@ app.post('/login',function(req,res){
     req.on('end',function(){
         body = JSON.parse(body);
         // trying to make a full join
-        var query = "SELECT * FROM `Hermes`.`users` FULL OUTER JOIN `Hermes`.`journals` ON"+
-        "`Hermes`.`journals`.`Name`,`Hermes`.`users`.`Name`"+
-        " WHERE `password`='"+body.password+"' AND (`Name`='"+body["name/email"]+"' OR `Email`='"+body["name/email"]+"');";
+        var query =
+        "SELECT COALESCE(`users`.`Name`, `journals`.`Name`) AS `Name`, COALESCE( `users`.`password`, `journals`.`Password` ) AS `Password` FROM `Hermes`.`users` LEFT JOIN `Hermes`.`journals`"+
+        " ON `Hermes`.`journals`.`Name` = `Hermes`.`users`.`Name` UNION SELECT COALESCE(`users`.`Name`, `journals`.`Name`) AS `Name`, COALESCE( `users`.`password`, `journals`.`Password` ) AS `Password`"+
+        " FROM `Hermes`.`users` RIGHT JOIN `Hermes`.`journals` ON `Hermes`.`journals`.`Name` = `Hermes`.`users`.`Name`"+
+        "WHERE ( `users`.`password` = '"+body.password+"' OR `journals`.`Password` = '"+body.password+"' ) AND( `users`.`Name` = '"+body["name/email"]+"' OR `users`.`Email` = '"+body["name/email"]+"'"+
+        " OR `journals`.`Name` = '"+body["name/email"]+"' OR `journals`.`Email` = '"+body["name/email"]+"' ); ";
+
         var dbRes = sendQuery(query);
         if (dbRes.length>0){
             res.send(true);
@@ -53,7 +63,7 @@ app.post('/login',function(req,res){
         }else{
             res.send(false);
         }
-        console.log("stuff = "+dbRes);
+        console.log("query res = \n"+dbRes);
     })
     
 })

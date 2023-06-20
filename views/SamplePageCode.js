@@ -24,11 +24,12 @@ function login(){
     }
 
     data["name/email"] = document.getElementById('login-name/email').value;
-    data.password = document.getElementById('password').value;
+    data.password = document.getElementById('login-password').value;
 
     let req = new XMLHttpRequest();
     req.onload = function () {
         var res = JSON.parse(this.response);
+        console.log("response = \n"+res.value);
         if(!res.value){
             document.getElementById("user_not_found").style.property=block;
         }

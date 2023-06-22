@@ -29,7 +29,7 @@ function login(){
     let req = new XMLHttpRequest();
     req.onload = function () {
         console.log("response = \n"+this.response);
-        if(this.response==false){
+        if(this.responseText==="false"){
             document.getElementById("user_not_found").style.display="block";
         }
     }

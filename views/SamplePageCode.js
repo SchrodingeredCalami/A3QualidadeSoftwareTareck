@@ -19,19 +19,18 @@ function login(){
     console.log("starting login");
 
     var data = {
-        "name/email":"",
+        "name":"",
         "password":""
     }
 
-    data["name/email"] = document.getElementById('login-name/email').value;
+    data.name = document.getElementById('login-name').value;
     data.password = document.getElementById('login-password').value;
 
     let req = new XMLHttpRequest();
     req.onload = function () {
-        var res = JSON.parse(this.response);
-        console.log("response = \n"+res.value);
-        if(!res.value){
-            document.getElementById("user_not_found").style.property=block;
+        console.log("response = \n"+this.response);
+        if(this.response==false){
+            document.getElementById("user_not_found").style.display="block";
         }
     }
     req.open('POST','/login');

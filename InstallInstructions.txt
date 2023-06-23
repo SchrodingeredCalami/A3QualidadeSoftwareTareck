@@ -28,6 +28,7 @@ CREATE TABLE `Hermes`.`users`(
 CREATE TABLE `Hermes`.`posts`(
     `PostID` INT NOT NULL AUTO_INCREMENT,
     `JournalID` INT not null,
+    `Content` VARCHAR(255) not null,
     `Created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(`PostID`),
     FOREIGN KEY(`JournalID`) REFERENCES `Hermes`.`users`(`ID`)
@@ -42,6 +43,6 @@ CREATE TABLE `Hermes`.`comments`(
 );
 ""
 
-* how to save the comment?
+* how to save the comment? (Still POC, so you can make an innefective one for now. Like directly in the DB)
 
 * There's still no security measure for the journal's accounts

@@ -14,12 +14,13 @@ var con = mysql.createConnection({
     database:"Hermes"
 })
 
-app.use(express.static(path.join(__dirname+'/views')));
-
 app.set('view engine', 'ejs');
 
+app.set('views', path.join(__dirname, 'views')); // default render pages directory.
 
-// Still don't know how to read the results...?
+app.use(express.static(path.join(__dirname,'staticAssets')));
+
+
 app.post('/login',function(req,res){
     var body = '';
     req.on('data',function(data){
@@ -30,20 +31,21 @@ app.post('/login',function(req,res){
     req.on('end',function(){
         body = JSON.parse(body);
         var query =
-        "SELECT * FROM users WHERE (users.Name='"+body.name+"' AND users.Password='"+body.password+"')";
+        "SELECT * FROM users WHERE (users.Name=? AND users.Password=?)";
+        var values =
+        [body.name,body.password];
 
-        con.query(query,function(error, result){
+        con.query(query, values,function(error, result){
+            var jsonRes = {"result":Boolean};
             if (error){
                 console.log("error at sending query");
             }else{
-                console.log(query);
                 if (result.length>0){
-                    res.render('SamplePage.ejs');
-                    console.log("got results\n");
+                    jsonRes.result=true;
                 }else{
-                    res.send(false);
-                    console.log("no results\n");
+                    jsonRes.result=false;
                 }
+                res.send(jsonRes);
             }
         })
     })

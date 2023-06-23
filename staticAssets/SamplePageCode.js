@@ -28,9 +28,13 @@ function login(){
 
     let req = new XMLHttpRequest();
     req.onload = function () {
-        console.log("response = \n"+this.response);
-        if(this.responseText==="false"){
+        let jsonRes=JSON.parse(this.response);
+        console.log("response = \n"+jsonRes);
+        if(jsonRes.result == false){
             document.getElementById("user_not_found").style.display="block";
+        }
+        if(jsonRes.result == true){
+            window.location.href='/main';
         }
     }
     req.open('POST','/login');

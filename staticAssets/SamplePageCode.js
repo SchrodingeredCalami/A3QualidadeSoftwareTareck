@@ -41,3 +41,17 @@ function login(){
     req.setRequestHeader('Content-Type','application/json');
     req.send(JSON.stringify(data));
 }
+
+function newWebPost(input){
+    let req = new XMLHttpRequest();
+    req.onload = ()=>{
+        
+    }
+    req.open('POST','/newPost');
+    req.setRequestHeader('Content-Type','text/plain');
+    req.send(input);
+}
+
+function webPost(){
+
+}

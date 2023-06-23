@@ -51,6 +51,26 @@ app.post('/login',function(req,res){
     })
 })
 
+app.post('/newPost', function(req,res){
+    var body = '';
+    req.on('data',function(data){
+        body+=data;
+    })
+
+    // When the request ends    
+    req.on('end',function(){
+        var query = "INSERT INTO `posts` VALUES (?)";
+        var values = [body];
+
+        con.query(query,values,function(err){
+            if(err){
+                console.log("unable to make the post");
+                res.send("Post unable to be made");
+            }
+        })
+    })
+})
+
 app.get('/',function(req,res){
     res.render('Login.ejs');
 })

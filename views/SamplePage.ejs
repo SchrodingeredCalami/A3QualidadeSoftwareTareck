@@ -16,8 +16,14 @@
         <script>
             
         </script>
+        <p id="feed"></p>
         <input type="text" id="post_input">
-        <button class="post_button" onclick="newPost(document.getElementById('post_input').value)"></button>
+        <button class="post_button" id="post_input" onclick="newWebPost(document.getElementById('post_input').value)"><span>post</span></button>
+        <script>
+            if (Auth<1){
+                document.getElementById("post_input").style.display="none";
+            }
+        </script>
     </div>
     <div id="Search_tab" class="tab">
         search

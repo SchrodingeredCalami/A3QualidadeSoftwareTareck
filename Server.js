@@ -36,15 +36,18 @@ app.post('/login',function(req,res){
         [body.name,body.password];
 
         con.query(query, values,function(error, result){
-            var jsonRes = {"result":Boolean};
+            var jsonRes = {};
             if (error){
                 console.log("error at sending query");
             }else{
-                if (result.length>0){
+                if (result.length=1){
                     jsonRes.result=true;
+                    jsonRes.ID=result[0].ID;
+                    jsonRes.Auth=result[0].Auth;
                 }else{
                     jsonRes.result=false;
                 }
+                console.log(JSON.stringify(jsonRes));
                 res.send(jsonRes);
             }
         })
@@ -59,13 +62,43 @@ app.post('/newPost', function(req,res){
 
     // When the request ends    
     req.on('end',function(){
-        var query = "INSERT INTO `posts` VALUES (?)";
-        var values = [body];
+        body = JSON.parse(body);
+        if(body.Auth>0){
+            var query = "INSERT INTO `posts`(`Content`,`JournalID`) VALUES (?,?)";
+            var values = [body.Content, body.ID];
 
-        con.query(query,values,function(err){
+            con.query(query,values,function(err){
+                if(err){
+                    console.log("unable to make the post\n"+err);
+                    res.send(false);
+                }else{
+                    res.send(true);
+                }
+            })
+        }else{
+            console.log("invalid post");
+            res.send(false);
+        }
+        
+    })
+})
+
+app.post('/getPost', (req,res)=>{
+    var body = '';
+    req.on('data',(data)=>{
+        body+=data;
+    })
+
+    // When the request ends    
+    req.on('end',()=>{
+        var query = "SELECT * FROM `posts` WHERE `Created`<(Select `Created` from `posts` WHERE `PostID` = ?) LIMIT 10";
+        var values = [body];// this body needs to be the oldest post
+
+        con.query(query,values,(err, qres)=>{
             if(err){
-                console.log("unable to make the post");
-                res.send("Post unable to be made");
+                res.send(false);
+            }else{
+                res.send(JSON.stringify(qres));
             }
         })
     })

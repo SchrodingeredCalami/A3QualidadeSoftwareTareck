@@ -9,8 +9,8 @@ var socket = 3000;
 
 var con = mysql.createConnection({
     host:"localhost",
-    user:"root",
-    password:"doxlyn",
+    user:"",
+    password:"",
     database:"Hermes"
 })
 
